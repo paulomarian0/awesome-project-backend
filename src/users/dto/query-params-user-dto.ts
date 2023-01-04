@@ -1,4 +1,5 @@
-export type QueryParamsUserDto = {
+
+export class QueryParamsUserDto  {
   
   id?: number
   login?: string

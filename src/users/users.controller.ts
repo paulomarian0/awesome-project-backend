@@ -20,8 +20,8 @@ export class UsersController {
   }
 
   @Get()
-  findUnique(@Query() params: any) {
-    return this.usersService.findUnique(+params.id)
+  findByLogin(@Param() login: string) {
+    return this.usersService.findByLogin(login)
   }
 
   @Put()

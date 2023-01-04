@@ -3,12 +3,18 @@ import { PrismaService } from 'src/database/prisma.service';
 import { CreateUserDto } from './dto/create-user-dto';
 import { QueryParamsUserDto } from './dto/query-params-user-dto';
 import { UpdateUserDto } from './dto/update-user-dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) { }
 
-  async create(data: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
+    const data = {
+      ...createUserDto,
+      password: await bcrypt.hash(createUserDto.password, 10)
+    }
+
     const payload = await this.prisma.user.create({
       data,
     });
@@ -19,7 +25,6 @@ export class UsersService {
   async findAll(params: QueryParamsUserDto) {
     if(params.id) params.id = +params.id
 
-
     const payload = await this.prisma.user.findMany({
       where: params
     })
@@ -27,10 +32,10 @@ export class UsersService {
     return payload;
   }
 
-  async findUnique(id: number) {
+  async findByLogin(login: string) {
     const payload = await this.prisma.user.findUnique({
       where: {
-        id,
+        login,
       }
     })
 
