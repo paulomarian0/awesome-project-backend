@@ -37,7 +37,9 @@ export class UsersService {
     return payload;
   }
 
-  async update(id: number, data:UpdateUserDto){
+  async update(params: QueryParamsUserDto, data:UpdateUserDto){
+    const id = +params.id
+    console.log(id)
     const payload = await this.prisma.user.update({
       data,
       where:{
@@ -48,7 +50,8 @@ export class UsersService {
     return payload;
   }
 
-  async delete(id: number) {
+  async delete(params: QueryParamsUserDto) {
+    const id = +params.id
     const payload = await this.prisma.user.delete({
       where: {
         id

@@ -24,13 +24,13 @@ export class UsersController {
     return this.usersService.findUnique(+params.id)
   }
 
-  @Put(":id")
-  update(@Param("id") id: number, @Body() data: UpdateUserDto) {
-    return this.usersService.update(+id, data)
+  @Put()
+  update(@Query() params: QueryParamsUserDto, @Body() data: UpdateUserDto) {
+    return this.usersService.update(params, data)
   }
 
   @Delete()
-  delete(@Query() id: number) {
-    return this.usersService.delete(+id);
+  delete(@Query() params: QueryParamsUserDto) {
+    return this.usersService.delete(params);
   }
 }
