@@ -18,15 +18,16 @@ export class UsersService {
     const payload = await this.prisma.user.create({
       data,
     });
-    
+
     return payload;
   }
 
   async findAll(params: QueryParamsUserDto) {
-    if(params.id) params.id = +params.id
+    if (params.id) params.id = +params.id
 
     const payload = await this.prisma.user.findMany({
-      where: params
+      where: params,
+      select: { id: true, login: true, name: true, admin: true, password: false }
     })
 
     return payload;
@@ -42,12 +43,12 @@ export class UsersService {
     return payload;
   }
 
-  async update(params: QueryParamsUserDto, data:UpdateUserDto){
+  async update(params: QueryParamsUserDto, data: UpdateUserDto) {
     const id = +params.id
     console.log(id)
     const payload = await this.prisma.user.update({
       data,
-      where:{
+      where: {
         id,
       },
     })

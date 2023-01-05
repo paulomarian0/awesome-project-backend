@@ -11,10 +11,10 @@ import { JwtAuthGuard } from './auth/strategies/jwt-auth.guard';
   imports: [PrismaModule, UsersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard
-    }
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard
+    // }
   ],
 })
 export class AppModule { }
