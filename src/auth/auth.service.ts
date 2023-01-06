@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/entities/user.entity';
@@ -22,6 +22,8 @@ export class AuthService {
 
     return {
       access_token: this.jwtService.sign(payload),
+      status: HttpStatus.OK,
+      name: user.name
     };
   }
 
