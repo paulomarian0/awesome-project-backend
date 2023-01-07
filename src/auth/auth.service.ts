@@ -11,7 +11,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UsersService,
-  ) {}
+  ) { }
 
   async login(user: User): Promise<UserToken> {
     const payload: UserPayload = {
@@ -23,7 +23,10 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
       status: HttpStatus.OK,
-      name: user.name
+      userData: {
+        user: user.name,
+        admin: user.admin
+      }
     };
   }
 
