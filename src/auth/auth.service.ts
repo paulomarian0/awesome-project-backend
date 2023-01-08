@@ -25,7 +25,8 @@ export class AuthService {
       status: HttpStatus.OK,
       userData: {
         user: user.name,
-        admin: user.admin
+        admin: user.admin,
+        userId: user.id,
       }
     };
   }

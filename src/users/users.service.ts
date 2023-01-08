@@ -64,12 +64,12 @@ export class UsersService {
     const isPasswordValid = await bcrypt.compare(updateUserPasswordDto.password, user.password);
 
     if (!isPasswordValid) {
-      return { message: 'Login addres or password incorrect.' }
+      throw new Error ('Login addres or password incorrect.' )
     }
 
     const payload = await this.prisma.user.update({
       data:{
-        password: await bcrypt.hash(updateUserPasswordDto.new_password, 10)
+        password: await bcrypt.hash(updateUserPasswordDto.newPassword, 10)
       },
       where: {
         id

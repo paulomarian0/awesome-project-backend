@@ -6,5 +6,6 @@ export interface UserToken {
   userData: {
     user: string,
     admin: boolean,
+    userId: number
   }
 }
