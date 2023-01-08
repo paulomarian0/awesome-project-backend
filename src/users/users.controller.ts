@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user-dto';
 import { QueryParamsUserDto } from './dto/query-params-user-dto';
 import { UpdateUserDto } from './dto/update-user-dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 
 @Controller('users')
 export class UsersController {
@@ -15,18 +16,17 @@ export class UsersController {
 
   @Get()
   findAll(@Query() params: QueryParamsUserDto) {
-
     return this.usersService.findAll(params)
-  }
-
-  @Get()
-  findByLogin(@Param() login: string) {
-    return this.usersService.findByLogin(login)
   }
 
   @Put()
   update(@Query() params: QueryParamsUserDto, @Body() data: UpdateUserDto) {
     return this.usersService.update(params, data)
+  }
+
+  @Put("/profile")
+  updatePassword(@Query() params: QueryParamsUserDto, @Body() data: UpdateUserPasswordDto) {
+    return this.usersService.updatePassword(params, data)
   }
 
   @Delete()

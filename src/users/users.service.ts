@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user-dto';
 import { QueryParamsUserDto } from './dto/query-params-user-dto';
 import { UpdateUserDto } from './dto/update-user-dto';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 
 @Injectable()
 export class UsersService {
@@ -45,12 +46,34 @@ export class UsersService {
 
   async update(params: QueryParamsUserDto, data: UpdateUserDto) {
     const id = +params.id
-    
+
     const payload = await this.prisma.user.update({
       data,
       where: {
         id,
       },
+    })
+
+    return payload;
+  }
+
+  async updatePassword(params: QueryParamsUserDto, updateUserPasswordDto: UpdateUserPasswordDto) {
+    const id = +params.id
+    const user = await this.findByLogin(updateUserPasswordDto.login);
+
+    const isPasswordValid = await bcrypt.compare(updateUserPasswordDto.password, user.password);
+
+    if (!isPasswordValid) {
+      return { message: 'Login addres or password incorrect.' }
+    }
+
+    const payload = await this.prisma.user.update({
+      data:{
+        password: await bcrypt.hash(updateUserPasswordDto.new_password, 10)
+      },
+      where: {
+        id
+      }
     })
 
     return payload;
